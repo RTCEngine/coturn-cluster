@@ -15,7 +15,7 @@ def generate(server,ttype,transport,secret):
     userid = uuid.uuid4().hex
     username = '%d:%s' % (int(time.time()) + 24*3600, userid)
 
-    digest = hmac.new(secret,username,digestmod=hashlib.sha1).digest()
+    digest = hmac.digest(bytes(secret,'utf-8'),bytes(username,'utf-8'),hashlib.sha1)
     credential = base64.b64encode(digest)
 
     uri = '%s:%s:3478?transport=%s' % (ttype,server,transport)
